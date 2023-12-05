@@ -52,6 +52,10 @@ function Program() {
     }
   };
 
+  async function deleteIt(id) {
+    const { error } = await supabase.from("excalidraw").delete().eq("id", id);
+  }
+
   function submit(e) {
     e.preventDefault();
 
@@ -141,6 +145,7 @@ function Program() {
           if (item.data.type === "rect") {
             return (
               <rect
+                onDoubleClick={() => deleteIt(item.id)}
                 key={item.id}
                 x={item.data.x}
                 y={item.data.y}
@@ -152,6 +157,7 @@ function Program() {
           } else {
             return (
               <circle
+                onDoubleClick={() => deleteIt(item.id)}
                 key={item.id}
                 cx={item.data.x}
                 cy={item.data.y}
