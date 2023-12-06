@@ -7,7 +7,6 @@ function Task({ key, taskName, deleteIt, description, amount }) {
     <li className="to-do-task" key={key}>
       <div>
         <h3>{taskName}</h3>
-
         <p>{description}</p>
         <p>{amount}</p>
       </div>
