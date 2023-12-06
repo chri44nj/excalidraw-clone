@@ -1,0 +1,24 @@
+.to-do-task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  padding: 1rem;
+  background-color: #033f63;
+  border-radius: 10px;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-button {
+  color: #ebebeb;
+  font-size: 1.5rem;
+  &:hover {
+    cursor: pointer;
+    color: #dd1c1a;
+  }
+}

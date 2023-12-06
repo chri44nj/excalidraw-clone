@@ -1,0 +1,77 @@
+.to-do-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  gap: 1rem;
+  background-color: #0fa3b1;
+  color: #ebebeb;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.to-do-form div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.to-do-form input,
+.to-do-form button {
+  padding: 0.25rem 0.5rem;
+}
+
+.to-do-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background-color: #ebebeb;
+  color: white;
+  height: 100dvh;
+  overflow: scroll;
+}
+
+.to-do-heading {
+  position: absolute;
+  padding-block: 1rem;
+  background-color: #0fa3b1;
+  width: 100%;
+  text-align: center;
+}
+
+.to-do-tasks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 1rem;
+  list-style-type: none;
+  padding-block: 5rem;
+}
+
+.add-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 1rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: #0fa3b1;
+  border: none;
+  color: #ebebeb;
+  font-size: 2rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
