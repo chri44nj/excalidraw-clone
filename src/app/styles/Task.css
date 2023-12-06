@@ -22,3 +22,15 @@
     color: #dd1c1a;
   }
 }
+
+@media only screen and (min-width: 600px) {
+  .to-do-task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+    padding: 1rem;
+    background-color: #033f63;
+    border-radius: 10px;
+  }
+}

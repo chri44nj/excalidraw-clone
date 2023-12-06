@@ -12,9 +12,9 @@ const supabase = createClient("https://cxcqsukrslfnrywvkkml.supabase.co", "eyJhb
 
 function Program() {
   const [data, setData] = useState([]);
-  const [taskName, setTaskName] = useState("Task udefineret");
-  const [description, setDescription] = useState("Beskrivelse udefineret");
-  const [amount, setAmount] = useState("Antal udefineret");
+  const [taskName, setTaskName] = useState("");
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState("");
 
   const [showForm, setShowForm] = useState(false);
 
@@ -51,10 +51,8 @@ function Program() {
     const { error } = await supabase.from("realtime").delete().eq("id", id);
   }
 
-  function submitTask(e) {
+  async function submitTask(e) {
     e.preventDefault();
-  }
-  async function clickedTask(e) {
     console.log(e);
     const { error } = await supabase.from("realtime").insert({
       data: {
@@ -83,7 +81,7 @@ function Program() {
             <label htmlFor="amount">Amount</label>
             <input type="number" id="amount" name="amount" value={amount} onChange={(e) => setAmount(e.target.value)} />
           </div>
-          <button onClick={clickedTask}>Add</button>
+          <input type="submit" value="Add" />
         </form>
       )}
 
