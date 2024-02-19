@@ -2,13 +2,15 @@ import { CloseCircleOutlined } from "@ant-design/icons/lib/icons";
 
 import "../styles/Item.css";
 
-function Item({ key, itemName, deleteItem, description, amount }) {
+function Item({ itemKey, itemName, itemCategory, itemVariant, deleteItem, itemDescription, itemAmount }) {
   return (
-    <li className="to-do-item" key={key}>
+    <li className="to-do-item" key={itemKey}>
       <div>
         <h3>{itemName}</h3>
-        <p>{description}</p>
-        <p>{amount}</p>
+        <p>{itemCategory}</p>
+        <p>{itemVariant}</p>
+        <p>{itemDescription}</p>
+        <p>{itemAmount}</p>
       </div>
       <CloseCircleOutlined onClick={deleteItem} className="delete-button" />
     </li>

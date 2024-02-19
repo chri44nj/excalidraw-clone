@@ -12,22 +12,26 @@ const supabase = createClient("https://cxcqsukrslfnrywvkkml.supabase.co", "eyJhb
 
 function Program() {
   /* States */
-  const [data, setData] = useState([]);
+  const [listData, setListData] = useState([]);
   const [itemName, setItemName] = useState("");
-  const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState("");
+  const [itemCategory, setItemCategory] = useState("");
+  const [itemVariant, setItemVariant] = useState("");
+  const [itemDescription, setItemDescription] = useState("");
+  const [itemAmount, setItemAmount] = useState("");
   const [showForm, setShowForm] = useState(false);
+  const [listOfItems, setListOfItems] = useState([]);
 
   /* Effects */
 
   useEffect(() => {
-    async function getList() {
-      let { data: realtime, error } = await supabase.from("realtime").select("*");
-
-      setData(realtime);
-    }
     getList();
   }, []);
+
+  useEffect(() => {
+    // Mapping through listData and extracting the value of "name" to save it as an array in listOfItems
+    const names = listData.map((item) => item.name);
+    setListOfItems(names);
+  }, [listData]);
 
   useEffect(() => {
     // Listen to inserts
@@ -42,10 +46,10 @@ function Program() {
   const handleInserts = (payload) => {
     console.log("Change received!", payload);
     if (payload.eventType === "INSERT") {
-      setData((old) => old.concat(payload.new));
+      setListData((old) => old.concat(payload.new));
     } else if (payload.eventType === "DELETE") {
       //payload.old.id
-      setData((old) => old.filter((item) => item.id != payload.old.id));
+      setListData((old) => old.filter((item) => item.id != payload.old.id));
     }
   };
 
@@ -58,17 +62,25 @@ function Program() {
     e.preventDefault();
     console.log(e);
     const { error } = await supabase.from("realtime").insert({
-      data: {
-        itemName,
-        description,
-        amount,
-      },
+      name: itemName.toLowerCase(),
+      category: itemCategory.toLowerCase(),
+      variant: itemVariant.toLowerCase() || null,
+      description: itemDescription.toLowerCase() || null,
+      amount: itemAmount || null,
+      active: true,
     });
 
     setItemName("");
-    setDescription("");
-    setAmount("");
+    setItemCategory("");
+    setItemVariant("");
+    setItemDescription("");
+    setItemAmount("");
     setShowForm((prevShowForm) => !prevShowForm);
+  }
+
+  async function getList() {
+    let { data: realtime } = await supabase.from("realtime").select("*");
+    setListData(realtime);
   }
 
   return (
@@ -76,18 +88,24 @@ function Program() {
       {showForm && (
         <form className="to-do-form" onSubmit={submitItem}>
           <div>
-            <div>
-              <label htmlFor="itemName">Item Name</label>
-              <input type="text" name="itemName" value={itemName} required onChange={(e) => setItemName(e.target.value)} />
-            </div>
+            <label htmlFor="itemName">Name</label>
+            <input type="text" name="itemName" value={itemName} required onChange={(e) => setItemName(e.target.value)} />
+          </div>
+          <div>
+            <label htmlFor="itemCategory">Category</label>
+            <input type="text" name="itemCategory" value={itemCategory} required onChange={(e) => setItemCategory(e.target.value)} />
+          </div>
+          <div>
+            <label htmlFor="itemVariant">Variant</label>
+            <input type="text" name="itemVariant" value={itemVariant} onChange={(e) => setItemVariant(e.target.value)} />
           </div>
           <div>
             <label htmlFor="description">Description</label>
-            <input type="text" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+            <input type="text" name="description" value={itemDescription} onChange={(e) => setItemDescription(e.target.value)} />
           </div>
           <div>
             <label htmlFor="amount">Amount</label>
-            <input type="number" id="amount" name="amount" value={amount} onChange={(e) => setAmount(e.target.value)} />
+            <input type="number" id="amount" name="amount" value={itemAmount} onChange={(e) => setItemAmount(e.target.value)} />
           </div>
           <button type="submit">Add</button>
         </form>
@@ -98,8 +116,8 @@ function Program() {
           <h2>To-Do</h2>
         </div>
         <ul className="to-do-items">
-          {data.map((item) => {
-            return <Item itemName={item.data.itemName} description={item.data.description} amount={item.data.amount} key={item.data.id} deleteItem={() => deleteItem(item.id)} id={item.id}></Item>;
+          {listData.map((item, index) => {
+            return <Item itemName={item.name} itemCategory={item.category} itemVariant={item.variant} itemDescription={item.description} itemAmount={item.amount} itemKey={index} key={index} deleteItem={() => deleteItem(item.id)} id={item.id}></Item>;
           })}
         </ul>
         <button onClick={toggleForm} className="add-button">
