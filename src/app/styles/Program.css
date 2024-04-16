@@ -18,8 +18,6 @@
 .to-do-form div {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .to-do-form input,
@@ -29,7 +27,6 @@
   border-radius: 10px;
   background-color: #ebebeb;
   color: #0fa3b1;
-  outline: none;
 }
 
 .to-do-form button {
@@ -67,29 +64,11 @@
 }
 
 .add-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: absolute;
-  bottom: 1rem;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  background-color: #0fa3b1;
+  bottom: 2rem;
   border: none;
-  color: #ebebeb;
-  font-size: 2rem;
-
-  &:hover {
-    cursor: pointer;
-  }
+  background-color: transparent;
 }
 
 @media only screen and (min-width: 600px) {
-  .add-button {
-    top: 50%;
-    right: 3rem;
-    bottom: auto;
-    transform: translate(-50%, -50%);
-  }
 }

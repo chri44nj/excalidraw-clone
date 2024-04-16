@@ -8,6 +8,12 @@
   border-radius: 10px;
 }
 
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .item-header {
   display: flex;
   justify-content: space-between;
@@ -23,14 +29,14 @@
   }
 }
 
+.flex-row {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
 @media only screen and (min-width: 600px) {
   .to-do-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     width: 50%;
-    padding: 1rem;
-    background-color: #033f63;
-    border-radius: 10px;
   }
 }

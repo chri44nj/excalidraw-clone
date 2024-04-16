@@ -2,7 +2,6 @@
 
 import { createClient } from "@supabase/supabase-js";
 import { useState, useEffect } from "react";
-import { PlusOutlined } from "@ant-design/icons";
 
 import Item from "./Item";
 import "../styles/Program.css";
@@ -22,6 +21,20 @@ function Program() {
   const [listOfItems, setListOfItems] = useState([]);
 
   /* Effects */
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showForm && !event.target.closest(".to-do-form")) {
+        setShowForm(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [showForm]);
 
   useEffect(() => {
     getList();
@@ -88,11 +101,11 @@ function Program() {
       {showForm && (
         <form className="to-do-form" onSubmit={submitItem}>
           <div>
-            <label htmlFor="itemName">Name</label>
+            <label htmlFor="itemName">Name*</label>
             <input type="text" name="itemName" value={itemName} required onChange={(e) => setItemName(e.target.value)} />
           </div>
           <div>
-            <label htmlFor="itemCategory">Category</label>
+            <label htmlFor="itemCategory">Category*</label>
             <input type="text" name="itemCategory" value={itemCategory} required onChange={(e) => setItemCategory(e.target.value)} />
           </div>
           <div>
@@ -120,8 +133,16 @@ function Program() {
             return <Item itemName={item.name} itemCategory={item.category} itemVariant={item.variant} itemDescription={item.description} itemAmount={item.amount} itemKey={index} key={index} deleteItem={() => deleteItem(item.id)} id={item.id}></Item>;
           })}
         </ul>
-        <button onClick={toggleForm} className="add-button">
-          <PlusOutlined />
+        <button type="button" onClick={toggleForm} className="add-button">
+          {showForm ? (
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#0fa3b1" class="bi bi-dash-circle-fill" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z" />
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#0fa3b1" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+            </svg>
+          )}
         </button>
       </section>
     </>
